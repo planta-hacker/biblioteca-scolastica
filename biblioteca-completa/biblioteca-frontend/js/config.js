@@ -1,4 +1,5 @@
 // js/config.js
+
 const API_BASE_URL = 'https://biblioteca-scolastica-production.up.railway.app';
 
 const CONFIG = {
