@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca Scolastica</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <div class="nav-brand">
+                <h2>📚 Biblioteca Scolastica</h2>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#" data-page="catalogo">Catalogo</a>
+                <a href="#" data-page="prestiti" id="nav-prestiti">I Miei Prestiti</a>
+                <a href="#" data-page="dispositivi">Dispositivi</a>
+                <a href="#" data-page="impegni">Calendario</a>
+                <a href="#" data-page="admin" id="nav-admin" style="display:none;">Admin</a>
+                <a href="#" data-page="profilo">Profilo</a>
+                <button id="logout-btn" class="btn-secondary">Logout</button>
+            </div>
+            <div class="nav-user" id="nav-user" style="display:none;">
+                <span id="user-name"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Auth Container (Login/Registrazione) -->
+    <div class="auth-container" id="auth-container">
+        <div class="auth-box">
+            <h2>Accedi alla Biblioteca</h2>
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">Login</button>
+                <button class="auth-tab" data-tab="register">Registrati</button>
+            </div>
+            
+            <!-- Form Login -->
+            <form id="login-form" class="auth-form">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="login-email" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <button type="submit" class="btn-primary btn-block">Accedi</button>
+            </form>
+
+            <!-- Form Registrazione -->
+            <form id="register-form" class="auth-form" style="display:none;">
+                <div class="form-group">
+                    <label>Nome</label>
+                    <input type="text" id="register-nome" required>
+                </div>
+                <div class="form-group">
+                    <label>Cognome</label>
+                    <input type="text" id="register-cognome" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="register-email" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="register-password" required>
+                </div>
+                <div class="form-group">
+                    <label>Tipo Utente</label>
+                    <select id="register-tipo">
+                        <option value="studente">Studente</option>
+                        <option value="docente">Docente</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary btn-block">Registrati</button>
+            </form>
+            
+            <div id="auth-message" class="message"></div>
+        </div>
+    </div>
+
+    <!-- App Container -->
+    <div class="app-container" id="app-container" style="display:none;">
+        
+        <!-- Pagina Catalogo -->
+        <div class="page" id="page-catalogo">
+            <div class="container">
+                <h1>Catalogo Biblioteca</h1>
+                
+                <div class="filters-bar">
+                    <input type="text" id="search-title" placeholder="Cerca per titolo..." class="filter-input">
+                    <select id="filter-tipo" class="filter-select">
+                        <option value="">Tutti i tipi</option>
+                        <option value="libro">Libri</option>
+                        <option value="rivista">Riviste</option>
+                        <option value="dizionario">Dizionari</option>
+                    </select>
+                    <select id="filter-disponibile" class="filter-select">
+                        <option value="">Disponibilità</option>
+                        <option value="true">Solo disponibili</option>
+                    </select>
+                    <button id="btn-search" class="btn-primary">Cerca</button>
+                </div>
+
+                <div class="materiali-grid" id="materiali-grid">
+                    <!-- Materiali caricati dinamicamente -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagina I Miei Prestiti -->
+        <div class="page" id="page-prestiti" style="display:none;">
+            <div class="container">
+                <h1>I Miei Prestiti</h1>
+                
+                <div class="prestiti-tabs">
+                    <button class="prestito-tab active" data-stato="prenotato">Prenotati</button>
+                    <button class="prestito-tab" data-stato="ritirato">In Corso</button>
+                    <button class="prestito-tab" data-stato="restituito">Completati</button>
+                </div>
+
+                <div id="prestiti-list" class="prestiti-list">
+                    <!-- Prestiti caricati dinamicamente -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagina Dispositivi -->
+        <div class="page" id="page-dispositivi" style="display:none;">
+            <div class="container">
+                <h1>Dispositivi Elettronici</h1>
+                <div id="dispositivi-grid" class="dispositivi-grid">
+                    <!-- Dispositivi caricati dinamicamente -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagina Calendario Impegni -->
+        <div class="page" id="page-impegni" style="display:none;">
+            <div class="container">
+                <h1>Calendario Impegni Scolastici</h1>
+                <button id="btn-nuovo-impegno" class="btn-primary" style="display:none;">+ Nuovo Impegno</button>
+                <div id="impegni-list" class="impegni-list">
+                    <!-- Impegni caricati dinamicamente -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagina Admin -->
+        <div class="page" id="page-admin" style="display:none;">
+            <div class="container">
+                <h1>Pannello Amministrazione</h1>
+                
+                <div class="admin-tabs">
+                    <button class="admin-tab active" data-section="materiali">Gestione Materiali</button>
+                    <button class="admin-tab" data-section="blacklist">Blacklist</button>
+                    <button class="admin-tab" data-section="statistiche">Statistiche</button>
+                    <button class="admin-tab" data-section="impostazioni">Impostazioni</button>
+                    <button class="admin-tab" data-section="avvisi">Avvisi</button>
+                </div>
+
+                <div id="admin-content">
+                    <!-- Contenuto admin caricato dinamicamente -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagina Profilo -->
+        <div class="page" id="page-profilo" style="display:none;">
+            <div class="container">
+                <h1>Il Mio Profilo</h1>
+                <div id="profilo-info" class="profilo-card">
+                    <!-- Info profilo caricate dinamicamente -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Dettaglio Materiale -->
+    <div class="modal" id="modal-dettaglio" style="display:none;">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div id="modal-dettaglio-content"></div>
+        </div>
+    </div>
+
+    <!-- Modal Prenotazione -->
+    <div class="modal" id="modal-prenota" style="display:none;">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h2>Prenota Materiale</h2>
+            <div id="modal-prenota-content"></div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/catalogo.js"></script>
+    <script src="js/prestiti.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
